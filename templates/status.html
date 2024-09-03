@@ -1,0 +1,95 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2><center>Order Status</center></h2>
+<p>Order ID: {{ order.id }}</p>
+<p>Table ID: {{ order.table_id }}</p>
+<p>Customer Name: {{ order.customer_name }}</p>
+<p>Food Items: {{ order.food_items }}</p>
+<p>Status: {{ order.status }}</p>
+
+<style>
+    body {
+        background-color: #f4f4f9; /* Light gray background for contrast */
+        font-family: Arial, sans-serif;
+        color: #242424; /* Dark text color for readability */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background-image: url('https://res.cloudinary.com/dui6tkwrj/image/upload/v1724999626/samples/food/pot-mussels.jpg'); /* Background image */
+        background-size: cover;
+        background-position: center;
+    }
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #000;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        z-index: 1000;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #000000;
+        color: #f6f3f3;
+        text-align: center;
+        padding: 10px 0;
+        z-index: 1000;
+    }
+
+    .content {
+        flex: 1;
+        margin-top: 60px; /* Space for navbar */
+        margin-bottom: 60px; /* Space for footer */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    h2 {
+        color: #ffffff; /* Professional blue for headings */
+        font-size: 2em;
+        margin-bottom: 20px;
+        transition: color 0.3s ease;
+    }
+
+    h2:hover {
+        color: #80aad3; /* Darker blue on hover */
+    }
+
+    p {
+        background: #000000; /* White background for text areas */
+        /* border: 1px solid #353535; */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px;
+        margin: 10px auto;
+        width: 100%;
+        /* max-width: 500px; */
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    p:nth-child(odd) {
+        background-color: #000000;; /* Slightly different background for alternate rows */
+    }
+    
+    @media (max-width: 768px) {
+        p {
+            width: 90%; /* Adjust width for smaller screens */
+            font-size: 14px; /* Adjust font size for smaller screens */
+        }
+    }
+</style>
+
+{% endblock %}

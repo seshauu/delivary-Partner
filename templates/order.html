@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<center><h2>Order Food</h2></center>
+<form method="POST" class="order-form">
+    <label for="table_id">Table ID:</label>
+    <input type="text" id="table_id" name="table_id" required><br>
+
+    <label for="customer_name">Customer Name:</label>
+    <input type="text" id="customer_name" name="customer_name" required><br>
+
+    <label for="food_items">Select Food Items:</label><br>
+    <input type="checkbox" name="food_items" value="Pizza"> Pizza<br>
+    <input type="checkbox" name="food_items" value="Pasta"> Pasta<br>
+    <input type="checkbox" name="food_items" value="Salad"> Salad<br>
+
+    <button type="submit">Place Order</button>
+</form>
+
+<style>
+    /* Styling the form container */
+    .order-form {
+        background-color: #f9f9f9;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        margin: 0 auto;
+        opacity: 0.9;
+    }
+
+    /* Styling the form elements */
+    .order-form label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+        color: #000000;
+    }
+
+    .order-form input[type="text"] {
+        width: 80%;
+        padding: 7px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #000000;
+        border-radius: 5px;
+    }
+
+    .order-form input[type="checkbox"] {
+        margin: 5px 0px;
+    }
+
+    .order-form button {
+        width: 60vh;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .order-form button:hover {
+        background-color: #0056b3;
+    }
+    main{
+        background-image: url(https://res.cloudinary.com/dui6tkwrj/image/upload/v1724999626/samples/food/pot-mussels.jpg);
+    }
+</style>
+{% endblock %}

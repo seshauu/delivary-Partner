@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Dashboard</title>
+    <meta http-equiv="refresh" content="10"> <!-- Refreshes the page every 10 seconds -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eab2b2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            color: #333;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://res.cloudinary.com/dui6tkwrj/image/upload/v1724999626/samples/food/fish-vegetables.jpg'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.5; /* Adjust opacity for the background */
+            z-index: -1; /* Ensure it is behind the content */
+        }
+
+        .content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for the table */
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        thead {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        {% extends 'layout.html' %}
+
+        {% block content %}
+        <h2>Kitchen Dashboard</h2>
+        <p>Below are the orders currently being prepared:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Table ID</th>
+                    <th>Customer Name</th>
+                    <th>Food Items</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.table_id }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.food_items }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                        <!-- Form for marking as Cooking -->
+                        <form method="POST" action="{{ url_for('update_order_status', order_id=order.id, status='Cooking') }}" style="display:inline;">
+                            <button type="submit" {% if order.status == 'Cooking' %}disabled{% endif %}>Mark as Cooking</button>
+                        </form>
+                        <!-- Form for marking as Ready -->
+                        <form method="POST" action="{{ url_for('update_order_status', order_id=order.id, status='Ready') }}" style="display:inline;">
+                            <button type="submit" {% if order.status == 'Ready' %}disabled{% endif %}>Mark as Ready</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endblock %}
+    </div>
+</body>
+</html>

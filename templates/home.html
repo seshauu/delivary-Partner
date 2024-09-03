@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Website</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, h2, h3, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Set basic styles for the body */
+        html, body {
+            height: 100%; /* Full height for sticky footer */
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 2.5;
+            background-color: #f4f4f4; /* Fallback background color */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            background-image: url(https://res.cloudinary.com/dui6tkwrj/image/upload/v1724999634/samples/breakfast.jpg); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Header styles */
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            transition: background 0.3s ease; /* Smooth background transition */
+        }
+
+        nav a:hover {
+            background: #393939;
+            border-radius: 5px;
+        }
+
+        /* Main content styles */
+        main {
+            padding: 40px; /* Adjusted padding for better spacing */
+            max-width: 1200px; /* Constrained width for readability */
+            margin: 20px auto; /* Centered main content with margin */
+            background-color: #c1daf0b3;
+            border-radius: 8px; /* Enhanced border radius */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            flex: 1; /* Allow main to expand and fill space */
+        }
+
+        /* Heading styles */
+        main h2 {
+            color: #000000; /* Dark color for contrast */
+            margin-bottom: 20px; /* Spacing below heading */
+            text-align: center; /* Center-align the heading */
+        }
+
+        /* Paragraph styles */
+        main p {
+            font-size: 18px; /* Adjusted font size for readability */
+            color: #000000; /* Slightly lighter color for text */
+            text-align: center; /* Center-align text */
+            max-width: 800px; /* Limit width of paragraph for readability */
+            margin: 0 auto; /* Center paragraph in the main content */
+        }
+
+        /* Button styles */
+        .btn {
+            background: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            display: inline-block;
+            transition: background 0.3s ease; /* Smooth background transition */
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        /* Footer styles */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('order') }}">Order Food</a>
+            <a href="{{ url_for('recommended') }}">Recommended Food</a>
+            <a href="{{ url_for('customer_orders') }}">Customer Orders</a>
+            {% if current_user.is_authenticated %}
+                {% if current_user.role == 'admin' %}
+                    <a href="{{ url_for('kitchen') }}">Control Food Status</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Sign In</a>
+                <a href="{{ url_for('register') }}">Sign Up</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <h2>Welcome to Our Restaurant</h2>
+        <p>Please use the navigation menu to place an order or view recommended dishes.</p>
+
+        {% if not current_user.is_authenticated %}
+        <div> 
+            <!-- Content for non-authenticated users -->
+        </div>
+        {% endif %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Restaurant Name</p>
+    </footer>
+</body>
+</html>

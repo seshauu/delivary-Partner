@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Orders</title>
+    <style>
+        /* General styles for the body */
+        body {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: url(https://res.cloudinary.com/dui6tkwrj/image/upload/v1724999626/samples/food/dessert.jpg); /* Background image for the body */
+            background-size: cover;
+            background-repeat: no-repeat; /* Ensure background doesn't repeat */
+            background-position: center;
+            background-attachment: fixed; /* Fixed background on scroll */
+            opacity: 1;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Styling for the container holding the order sections */
+        .container {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* White with transparency */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            width: 100%;
+            max-width: 100%;
+            transition: transform 0.3s, background-color 0.3s; /* Transition for hover effects */
+        }
+
+        .container:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+            background-color: rgba(255, 255, 255, 1); /* Solid white on hover */
+        }
+
+        /* Styling for the section headings */
+        .container h3 {
+            margin-top: 0;
+            color: #1f6bbc; /* Dark blue for headings */
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s; /* Transition for hover effects */
+        }
+
+        th {
+            background-color: #f4f4f9; /* Light background for table headers */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Alternate row color */
+        }
+
+        tr:hover td {
+            background-color: #e9ecef; /* Light gray on row hover */
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            th, td {
+                font-size: 14px; /* Adjust font size for smaller screens */
+            }
+        }
+
+        /* Additional styling for transition effects */
+        h2 {
+            color: #111112; /* Professional blue for headings */
+            margin-top: 20px;
+            text-align: center;
+            transition: color 0.3s ease; /* Transition for color change */
+        }
+
+        h2:hover {
+            color: #070d14; /* Darker blue on hover */
+        }
+
+    </style>
+</head>
+<body>
+    {% extends 'layout.html' %}
+
+    {% block content %}
+    <h2>Customer Orders</h2>
+
+    <div class="container">
+        <h3>Ready Orders</h3>
+        <table>
+            <thead>
+                <tr>
+                    {% if current_user.role == 'admin' %}
+                        <th>Table ID</th>
+                        <th>Customer Name</th>
+                    {% else %}
+                        <th>Table ID</th>
+                    {% endif %}
+                    <th>Order Count</th>
+                    <th>Statuses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders_by_status['Ready'] %}
+                <tr>
+                    {% if current_user.role == 'admin' %}
+                        <td>{{ order.table_id }}</td>
+                        <td>{{ order.customer_name }}</td>
+                    {% else %}
+                        <td>{{ order.table_id }}</td>
+                    {% endif %}
+                    <td>{{ order.order_count }}</td>
+                    <td>{{ order.statuses }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">No ready orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h3>Cooking Orders</h3>
+        <table>
+            <thead>
+                <tr>
+                    {% if current_user.role == 'admin' %}
+                        <th>Table ID</th>
+                        <th>Customer Name</th>
+                    {% else %}
+                        <th>Table ID</th>
+                    {% endif %}
+                    <th>Order Count</th>
+                    <th>Statuses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders_by_status['Cooking'] %}
+                <tr>
+                    {% if current_user.role == 'admin' %}
+                        <td>{{ order.table_id }}</td>
+                        <td>{{ order.customer_name }}</td>
+                    {% else %}
+                        <td>{{ order.table_id }}</td>
+                    {% endif %}
+                    <td>{{ order.order_count }}</td>
+                    <td>{{ order.statuses }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">No cooking orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h3>Sent to Kitchen Orders</h3>
+        <table>
+            <thead>
+                <tr>
+                    {% if current_user.role == 'admin' %}
+                        <th>Table ID</th>
+                        <th>Customer Name</th>
+                    {% else %}
+                        <th>Table ID</th>
+                    {% endif %}
+                    <th>Order Count</th>
+                    <th>Statuses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders_by_status['Sent to Kitchen'] %}
+                <tr>
+                    {% if current_user.role == 'admin' %}
+                        <td>{{ order.table_id }}</td>
+                        <td>{{ order.customer_name }}</td>
+                    {% else %}
+                        <td>{{ order.table_id }}</td>
+                    {% endif %}
+                    <td>{{ order.order_count }}</td>
+                    <td>{{ order.statuses }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">No orders sent to kitchen found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+</body>
+</html>
